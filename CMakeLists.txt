@@ -59,7 +59,7 @@ find_package(std_srvs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(pcl_ros REQUIRED)
 find_package(pcl_conversions REQUIRED)
-find_package(livox_ros_driver2 REQUIRED)
+# find_package(livox_ros_driver2 REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 set(dependencies
@@ -73,7 +73,7 @@ set(dependencies
   visualization_msgs
   pcl_ros
   pcl_conversions
-  livox_ros_driver2
+  # livox_ros_driver2
 )
 
 # Thirdparty libraries
@@ -120,9 +120,23 @@ install(TARGETS fastlio_mapping
   DESTINATION lib/${PROJECT_NAME}
 )
 
-install(
-  DIRECTORY config launch rviz
-  DESTINATION share/${PROJECT_NAME}
+# ---------------- Install --------------- #
+install(TARGETS fastlio_mapping
+  DESTINATION lib/${PROJECT_NAME}
 )
+
+# ✅ 分目录安装，确保 launch/config/rviz 都能正确放到 share/fast_lio 下
+install(DIRECTORY launch/
+  DESTINATION share/${PROJECT_NAME}/launch
+)
+
+install(DIRECTORY config/
+  DESTINATION share/${PROJECT_NAME}/config
+)
+
+install(DIRECTORY rviz/
+  DESTINATION share/${PROJECT_NAME}/rviz
+)
+
 
 ament_package()
